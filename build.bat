@@ -1,12 +1,19 @@
 @echo off
-REM Build script for DIT400 Course Management System (C++)
+REM Build script for DIT400 Course Management System (Java)
 
-REM Compile using MinGW g++
-g++ -std=c++11 -O2 -o cms_cpp.exe main.cpp
-
+REM Compile Main.java
+javac Main.java
 IF %ERRORLEVEL% NEQ 0 (
-    echo Build failed!
+    echo Compilation failed!
     exit /b %ERRORLEVEL%
 )
 
-echo Build successful! Run the program with: cms_cpp.exe
+REM Package into executable JAR
+jar cfe cms_java.jar Main Main.class
+IF %ERRORLEVEL% NEQ 0 (
+    echo JAR creation failed!
+    exit /b %ERRORLEVEL%
+)
+
+echo Build successful! Run with:
+echo   java -jar cms_java.jar
